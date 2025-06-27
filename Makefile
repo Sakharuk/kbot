@@ -19,7 +19,7 @@ endif
 ifeq ($(UNAME_M),x86_64)
   TARGETARCH := amd64
 else ifeq ($(UNAME_M),AMD64)
-  TARGETARCHv := amd64
+  TARGETARCH := amd64
 else ifeq ($(UNAME_M),aarch64)
   TARGETARCH := arm64
 else ifeq ($(UNAME_M),arm64)
