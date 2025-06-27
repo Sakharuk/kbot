@@ -28,9 +28,6 @@ else
   TARGETARCH := amd64
 endif
 
-deps:
-	go mod download
-
 format:
 	gofmt -s -w ./
 

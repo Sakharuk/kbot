@@ -4,7 +4,6 @@ WORKDIR /go/src/app
 
 COPY . .
 
-RUN make deps
 RUN make build
 
 FROM scratch
