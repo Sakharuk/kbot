@@ -41,7 +41,7 @@ get:
 	go get
 
 build: format get
-	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X github.com/Sakharuk/kbot/cmd.appVersion=${VERSION}"
+	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/Sakharuk/kbot/cmd.appVersion=${VERSION}
 
 linux:
 	$(MAKE) build TARGETOS=linux TARGETARCH=amd64
