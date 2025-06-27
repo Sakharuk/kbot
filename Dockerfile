@@ -2,8 +2,10 @@ FROM quay.io/projectquay/golang:1.20 as builder
 
 WORKDIR /go/src/app
 
-COPY . .
+COPY go.mod go.sum ./
 RUN go mod download
+
+COPY . .
 
 RUN make build
 
