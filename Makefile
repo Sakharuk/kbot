@@ -28,6 +28,9 @@ else
   TARGETARCH := amd64
 endif
 
+deps:
+	go mod download
+
 format:
 	gofmt -s -w ./
 
@@ -62,6 +65,7 @@ windows-arm:
 	$(MAKE) build TARGETOS=windows TARGETARCH=arm64
 
 image: 
+	
 	docker build --platform=${TARGETOS}/${TARGETARCH} -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} .
 
 push:
