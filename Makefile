@@ -1,6 +1,6 @@
 
 APP=$(shell basename $(shell git remote get-url origin))
-REGISTRY=sakharuk
+REGISTRY=san13os
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 
 UNAME_S := $(shell uname -s 2>NUL || echo Windows_NT)
@@ -62,16 +62,11 @@ windows-arm:
 	$(MAKE) build TARGETOS=windows TARGETARCH=arm64
 
 image: 
-	docker build --platform=${TARGETOS}/${TARGETARCH} -t ghcr.io/${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} .
+	docker build --platform=${TARGETOS}/${TARGETARCH} -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} .
 
 push:
-	@bash -c '\
-		echo "Logging in to ghcr.io..."; \
-		read -s -p "Enter GHCR token: " GHCR_TOKEN; echo ""; \
-		echo $$GHCR_TOKEN | docker login ghcr.io -u $(REGISTRY) --password-stdin; \
-		docker push ghcr.io/$(REGISTRY)/$(APP):$(VERSION)-$(TARGETOS)-$(TARGETARCH); \
-		'
+	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
 
 clean:
 	rm -rf kbot
-	docker rmi ghcr.io/${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
+	docker rmi ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
