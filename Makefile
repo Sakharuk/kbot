@@ -44,27 +44,25 @@ build: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/Sakharuk/kbot/cmd.appVersion=${VERSION}
 
 linux:
-	$(MAKE) build TARGETOS=linux TARGETARCH=amd64
+	TARGETOS=linux TARGETARCH=amd64 build
 
 linux-arm:
-	$(MAKE) build TARGETOS=linux TARGETARCH=arm64
+	TARGETOS=linux TARGETARCH=arm64 build
 
 macos:
-	$(MAKE) build TARGETOS=darwin TARGETARCH=amd64
+	TARGETOS=darwin TARGETARCH=amd64 build
 
 macos-arm:
-	$(MAKE) build TARGETOS=darwin TARGETARCH=arm64
+	TARGETOS=darwin TARGETARCH=arm64 build
 
 windows:
-	$(MAKE) build TARGETOS=windows TARGETARCH=amd64
+	TARGETOS=windows TARGETARCH=amd64 build
 
 windows-arm:
-	$(MAKE) build TARGETOS=windows TARGETARCH=arm64
+	TARGETOS=windows TARGETARCH=arm64 build
 
-image: 
-	
-	docker build --platform=${TARGETOS}/${TARGETARCH} -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} .
-
+image: 	
+	docker build --platform ${TARGETOS}/${TARGETARCH} -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH} . 
 push:
 	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-${TARGETARCH}
 
