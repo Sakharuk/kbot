@@ -1,6 +1,6 @@
 
 APP=$(shell basename $(shell git remote get-url origin))
-REGISTRY=san13os
+REGISTRY=ghcr.io/sakharuk
 VERSION=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 
 UNAME_S := $(shell uname -s 2>NUL || echo Windows_NT)
