@@ -48,11 +48,13 @@ pipeline {
 
         stage('build') {
             steps {
-                echo "Building binary for platform ${params.OS} on ${params.ARCH} started"
-                if (params.ARCH == 'amd64') {
-                sh "make ${params.OS}"
-                } else {
-                    sh "make ${params.OS}-arm"
+                script{
+                    echo "Building binary for platform ${params.OS} on ${params.ARCH} started"
+                    if (params.ARCH == 'amd64') {
+                        sh "make ${params.OS}"
+                    } else {
+                        sh "make ${params.OS}-arm"
+                    }
                 }
             }
         }
