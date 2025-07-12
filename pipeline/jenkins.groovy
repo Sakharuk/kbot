@@ -38,43 +38,49 @@ pipeline {
                 git branch: "${BRANCH}", url: "${REPO}"
             }
         }
-
-        stage('test') {
+        
+        stage('lint') {
+            when { !SKIP_LINT }
             steps {
                 echo 'Testing started'
-                sh "make test"
+                sh 'make lint'
+            }
+        }
+
+        stage('test') {
+            when { !SKIP_TEST }
+            steps {
+                echo 'Testing started'
+                sh 'make test'
             }
         }
 
         stage('build') {
             steps {
                 script{
+                    def target = (params.ARCH == 'amd64') ? params.OS : "${params.OS}-arm"
                     echo "Building binary for platform ${params.OS} on ${params.ARCH} started"
-                    if (params.ARCH == 'amd64') {
-                        sh "make ${params.OS}"
-                    } else {
-                        sh "make ${params.OS}-arm"
-                    }
+                    sh "make ${target}"
                 }
             }
         }
 
         stage('image') {
             steps {
-                echo "Building image for platform ${params.OS} on ${params.ARCH} started"
-                sh "make image"
+                echo 'Building image for platform ${params.OS} on ${params.ARCH} started'
+                sh 'make image'
             }
         }
         
         stage('login to GHCR') {
             steps {
-                sh "echo $GITHUB_TOKEN_PSW | docker login ghcr.io -u $GITHUB_TOKEN_USR --password-stdin"
+                sh 'echo $GITHUB_TOKEN_PSW | docker login ghcr.io -u $GITHUB_TOKEN_USR --password-stdin'
             }
         }
 
         stage('push image') {
             steps {
-                sh "make push"
+                sh 'make push'
             }
         } 
     }
