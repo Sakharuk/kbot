@@ -1,10 +1,13 @@
 name: KBOT_CICD
 
-on: push
+on: 
+  push:
+    branches:
+      - develop
 
 permissions:
   contents: write
-  
+
 env:
   TARGETOS: linux
   TARGETARCH: amd64
