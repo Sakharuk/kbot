@@ -40,7 +40,9 @@ pipeline {
         }
         
         stage('lint') {
-            when { !SKIP_LINT }
+            when {
+                expression { !params.SKIP_LINT }
+            }
             steps {
                 echo 'Testing started'
                 sh 'make lint'
@@ -48,7 +50,9 @@ pipeline {
         }
 
         stage('test') {
-            when { !SKIP_TEST }
+            when { 
+                expression { !params.SKIP_LINT }
+            }
             steps {
                 echo 'Testing started'
                 sh 'make test'
